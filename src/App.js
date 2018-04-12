@@ -1,18 +1,41 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
+import Form from './components/Form';
+import List from './components/List';
 
 class App extends Component {
+  constructor() {
+    super()
+
+    this.state = {
+      groceries: ['eggs','milk','bread']
+    }
+  }
+  addGrocery(text){
+    this.setState({
+      groceries: [...this.state.groceries, text]
+    })
+  }
+  deleteItem(index){
+    this.setState({
+      groceries: [...this.state.groceries.slice(0, index), ...this.state.groceries.slice(index+1)]
+    })
+  }
+  // markDone(index){
+  //   this.setState
+  // }
+  
+
+
+
   render() {
     return (
       <div className="App">
         <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
+          <h1 className="App-title">Grocery List</h1>
         </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+        <Form title="Add Grocery List Item" add={(arg) => this.addGrocery(arg)} />
+        <List items={this.state.groceries} deleteItem={(index) => this.deleteItem(index)}/>
       </div>
     );
   }
